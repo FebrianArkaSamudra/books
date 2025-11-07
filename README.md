@@ -16,7 +16,7 @@ The onPressed code in the ElevatedButton is used to fetch data asynchronously wh
 
 ## Practicum 2
 
-### Explanation of Steps 1 and 2
+### Explanation of Steps 1 and 2 (Question 4)
 
 **Step 1: Three Async Methods**
 ```dart
@@ -85,3 +85,47 @@ This code illustrates important concepts in asynchronous programming in Flutter:
 - Updating UI after async operations complete
 
 ![alt text](img/Practicum2.gif)
+
+## Practicum 3
+### Step 2: Adding Completer Implementation (Question 5)
+
+This step introduces the use of `Completer` in asynchronous programming:
+
+```dart
+late Completer completer;
+
+Future getNumber() {
+  completer = Completer<int>();
+  calculate();
+  return completer.future;
+}
+
+Future calculate() async {
+  await Future.delayed(const Duration(seconds: 5));
+  completer.complete(42);
+}
+```
+
+**Code Explanation:**
+
+1. **Late Completer Variable:**
+  - `late Completer completer;` declares a Completer that will be initialized later
+  - Completer is a tool for creating Futures and controlling when they complete
+
+2. **getNumber() Method:**
+  - Creates a new `Completer<int>` instance
+  - Calls `calculate()` to start the async operation
+  - Returns `completer.future` immediately, allowing asynchronous handling
+  - The Future will complete when `completer.complete()` is called
+
+3. **calculate() Method:**
+  - Simulates a 5-second processing time using `Future.delayed`
+  - After the delay, calls `completer.complete(42)` to resolve the Future
+  - The value 42 will be delivered to any code awaiting the Future
+
+Result :
+![alt text](img/Practicum3.gif)
+
+
+### Question 6
+
