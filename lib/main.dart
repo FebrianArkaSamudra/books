@@ -32,6 +32,44 @@ class _FuturePageState extends State<FuturePage> {
   String result = '';
   bool _loading = false;
 
+  Future<int> returnOneAsync() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return 1;
+  }
+
+  Future<int> returnTwoAsync() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return 2;
+  }
+
+  Future<int> returnThreeAsync() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return 3;
+  }
+
+  Future<void> count() async {
+    setState(() {
+      result = '';
+      _loading = true;
+    });
+
+    try {
+      int total = 0;
+      total = await returnOneAsync();
+      total += await returnTwoAsync();
+      total += await returnThreeAsync();
+      setState(() {
+        result = total.toString();
+        _loading = false;
+      });
+    } catch (e) {
+      setState(() {
+        result = 'An error occurred';
+        _loading = false;
+      });
+    }
+  }
+
   // Fetch the specified Google Books volume. The user requested id: 1bm0DwAAQBAJ
   Future<http.Response> getData() async {
     const authority = 'www.googleapis.com';
@@ -40,7 +78,8 @@ class _FuturePageState extends State<FuturePage> {
     return http.get(url);
   }
 
-  void _fetch() {
+  // Original fetch method (commented out as requested)
+  /*void _fetch() {
     setState(() {
       _loading = true;
       result = '';
@@ -61,7 +100,7 @@ class _FuturePageState extends State<FuturePage> {
             _loading = false;
           });
         });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +117,7 @@ class _FuturePageState extends State<FuturePage> {
           child: Column(
             children: [
               const SizedBox(height: 16),
-              ElevatedButton(child: const Text('GO!'), onPressed: _fetch),
+              ElevatedButton(child: const Text('GO!'), onPressed: count),
               const SizedBox(height: 16),
               if (_loading) const CircularProgressIndicator(),
               const SizedBox(height: 16),

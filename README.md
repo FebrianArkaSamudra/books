@@ -15,3 +15,73 @@ The onPressed code in the ElevatedButton is used to fetch data asynchronously wh
 ![alt text](img/Practicum1.gif)
 
 ## Practicum 2
+
+### Explanation of Steps 1 and 2
+
+**Step 1: Three Async Methods**
+```dart
+Future<int> returnOneAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 1;
+}
+
+Future<int> returnTwoAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 2;
+}
+
+Future<int> returnThreeAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 3;
+}
+```
+These three methods demonstrate asynchronous operations in Flutter/Dart:
+1. Each method returns a `Future<int>`, indicating an async operation that will produce an integer value
+2. The `async` keyword marks these methods as asynchronous
+3. `Future.delayed()` simulates a time-consuming process (3-second delay)
+4. After the delay, each method returns a different number (1, 2, and 3)
+
+**Step 2: count() Method**
+```dart
+Future<void> count() async {
+  setState(() {
+    result = '';
+    _loading = true;
+  });
+    
+  try {
+    int total = 0;
+    total = await returnOneAsync();      
+    total += await returnTwoAsync();     
+    total += await returnThreeAsync();   
+    setState(() {
+      result = total.toString();
+      _loading = false;
+    });
+  } catch (e) {
+    setState(() {
+      result = 'An error occurred';
+      _loading = false;
+    });
+  }
+}
+```
+The `count()` method demonstrates the use of async/await for sequential operations:
+1. Initially clears the result and shows a loading indicator
+2. Uses `await` to wait for the result of each async operation sequentially
+3. Sums the results from all three methods (1 + 2 + 3 = 6)
+4. Total time taken is approximately 9 seconds because:
+   - Waiting for `returnOneAsync()` (3 seconds)
+   - Waiting for `returnTwoAsync()` (3 more seconds)
+   - Waiting for `returnThreeAsync()` (3 more seconds)
+5. Final result (6) is displayed in the UI using `setState()`
+6. If an error occurs, it will display "An error occurred"
+
+This code illustrates important concepts in asynchronous programming in Flutter:
+- Using Future for time-consuming operations
+- Managing loading states during async processes
+- Using await to wait for async operation results
+- Error handling with try-catch
+- Updating UI after async operations complete
+
+![alt text](img/Practicum2.gif)
