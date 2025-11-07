@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:async/async.dart';
+// removed unused package import
 
 void main() {
   runApp(const MyApp());
@@ -39,8 +39,13 @@ class _FuturePageState extends State<FuturePage> {
   }
 
   Future calculate() async {
-    await Future.delayed(const Duration(seconds: 5));
-    completer.complete(42);
+    try {
+      await Future.delayed(const Duration(seconds: 5));
+      completer.complete(42);
+      // throw Exception();
+    } catch (_) {
+      completer.completeError({});
+    }
   }
 
   String result = '';
@@ -134,11 +139,17 @@ class _FuturePageState extends State<FuturePage> {
               ElevatedButton(
                 child: const Text('GO!'),
                 onPressed: () {
-                  getNumber().then((value) {
-                    setState(() {
-                      result = value.toString();
-                    });
-                  });
+                  getNumber()
+                      .then((value) {
+                        setState(() {
+                          result = value.toString();
+                        });
+                      })
+                      .catchError((e) {
+                        setState(() {
+                          result = 'An error occurred';
+                        });
+                      });
                 },
               ),
               const SizedBox(height: 16),
