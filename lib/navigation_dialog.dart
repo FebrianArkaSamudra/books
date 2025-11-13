@@ -54,7 +54,7 @@ class _NavigationDialogScreenState extends State<NavigationDialogScreen> {
     return Scaffold(
       backgroundColor: color,
       appBar: AppBar(
-        title: const Text('Navigation Dialog Screen'),
+        title: const Text('Navigation Dialog Screen - Febrian Arka Samudra - 2341720066'),
       ),
       body: Center(
         child: ElevatedButton(

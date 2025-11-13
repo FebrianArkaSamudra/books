@@ -261,4 +261,5 @@ Yes now the app displays an explicit error message when the Future fails.Because
 When you click any button (“Red,” “Green,” or “Blue”) on the Navigation Second Screen, the selected color is sent back to the Navigation First Screen using Navigator.pop(context, color), which closes the second screen and returns the chosen color as a result to the await Navigator.push(...) call. The first screen then receives this color, updates its color variable, and calls setState() to rebuild the user interface with the new background color. As a result, the background color of the first screen changes according to the button you pressed, demonstrating how Flutter’s navigation and state management work together to pass data between screens.
 
 ## Practicum 9: Leveraging async/await with the Dialog Widget
-
+![alt text](img/Question17.gif)
+When you click each button (Red, Green, or Blue), the dialog closes and the background color of the screen changes to the selected color. This happens because each button uses Navigator.pop(context, color) to return the chosen color to the _showColorDialog method. The returned color is then stored in the selectedColor variable, and setState() updates the color variable in the widget, causing the Scaffold background to rebuild with the new color.
