@@ -251,3 +251,14 @@ Yes — visually the final result (spinner then coordinates) may look the same, 
 **Question 14** 
 ![alt text](img/Question14.jpeg)
 Yes now the app displays an explicit error message when the Future fails.Because we use snapshot.hasError in FutureBuilder to display a special UI in error conditions. Previously, the code only displayed snapshot.data.toString() when it was complete (or empty in other cases), so errors were not handled explicitly. Handling errors in the builder makes the UI more informative and prevents the app from displaying null values or confusion in case of failure.
+
+## Practicum 8: Navigation route with Future Function
+**Question 15**
+![alt text](img/Question15..png)
+
+**Question 16**
+![alt text](img/Question16.gif) 
+When you click any button (“Red,” “Green,” or “Blue”) on the Navigation Second Screen, the selected color is sent back to the Navigation First Screen using Navigator.pop(context, color), which closes the second screen and returns the chosen color as a result to the await Navigator.push(...) call. The first screen then receives this color, updates its color variable, and calls setState() to rebuild the user interface with the new background color. As a result, the background color of the first screen changes according to the button you pressed, demonstrating how Flutter’s navigation and state management work together to pass data between screens.
+
+## Practicum 9: Leveraging async/await with the Dialog Widget
+

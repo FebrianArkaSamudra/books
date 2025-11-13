@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'geolocation.dart';
+import 'navigation_first.dart';
+import 'navigation_second.dart';
 // removed unused package import
 
 void main() {
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LocationScreen(),
+      home: const NavigationFirst(),
     );
   }
 }
