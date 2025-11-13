@@ -194,3 +194,19 @@ Subtle differences and best practices
 - UI state: in your code `count()` updates `_loading` before work and sets it back afterwards. The `getNumber()` / `calculate()` flow in the README example doesn't toggle `_loading`. For consistent UX you should set `_loading = true` before starting and set `_loading = false` in both the success and error handlers.
 - Await vs then/catchError: using `async`/`await` with try/catch (linear style) is generally easier to read and reason about. Using `.then(...).catchError(...)` is equivalent but uses callbacks and can be trickier with nested logic. Either approach is fine if error handling is correct.
 ![alt text](img/Question6.gif)
+
+## Practicum 4 — Parallel Futures (Instructions)
+
+This practicum shows how to run multiple `Future` operations in parallel to save time. Follow these steps in your editor (VS Code, Android Studio, or your preferred editor). It's assumed you completed Practicum 3.
+**Question 7**
+- Capture a short GIF showing the result `6` appearing after about 3 seconds and add it to the repository at `img/Question7.gif`.Commit the GIF with message: `W11: Soal 7`.
+![alt text](img/Question7.gif)
+
+**Question 8** 
+- Step 1 used `FutureGroup` (from `package:async`) which allows adding futures dynamically and closing the group later; useful when you don't have all futures upfront.
+- Step 4 used the built-in `Future.wait`, which accepts a list of futures at once and is simpler when the futures are known ahead of time. Both run futures in parallel and return a list of results when all complete.
+![alt text](img/Question8.gif)
+
+Notes :
+- `FutureGroup` is useful when you collect futures dynamically; `Future.wait` is simpler when the list is known up-front.
+- Running futures in parallel reduces total elapsed time to roughly the longest single task.
