@@ -242,7 +242,7 @@ Do you get GPS coordinates when running in a browser? Why is that? :
 
 No, GPS coordinates cannot be obtained when running on a web browser.Because the Geolocator plugin only works on native platforms (Android, iOS, macOS, Windows, Linux). Web browsers don't have direct access to the device's GPS hardware for security and privacy reasons. Browser geolocation requires explicit user permission through the browser's API, which is different from the native mobile geolocation API.
 
-**Question13 (singkat):** Ya — secara visual hasil akhir (spinner lalu koordinat) bisa sama, tetapi implementasi dengan `FutureBuilder` membuat kode lebih bersih, lebih reaktif, dan otomatis menangani state (loading/sukses/error) tanpa banyak `setState()` manual.
+**Question13** Yes,visually, the end result (spinner and coordinates) may be the same, but implementing with `FutureBuilder` makes the code cleaner, more reactive, and automatically handles state (loading/success/error) without a lot of manual `setState()`.
 
 **Question13** 
 ![alt text](img/Question13.jpeg)
