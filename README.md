@@ -16,7 +16,8 @@ The onPressed code in the ElevatedButton is used to fetch data asynchronously wh
 
 ## Practicum 2
 
-### Explanation of Steps 1 and 2 (Question 4)
+### Explanation of Steps 1 and 2 
+**Question 4**
 
 **Step 1: Three Async Methods**
 ```dart
@@ -87,7 +88,8 @@ This code illustrates important concepts in asynchronous programming in Flutter:
 ![alt text](img/Question4.gif)
 
 ## Practicum 3
-### Step 2: Adding Completer Implementation (Question 5)
+### Step 2: Adding Completer Implementation 
+**Question 5**
 
 This step introduces the use of `Completer` in asynchronous programming:
 
@@ -126,7 +128,7 @@ Future calculate() async {
 Result :
 ![alt text](img/Question5.gif)
 
-
+## Practicum 4: Calling Futures in parallel
 ### Question 6
 
 Difference between Step 2 (Completer-based getNumber) and Steps 5–6 (calculate with try/catch and then/catchError handling)
@@ -210,3 +212,23 @@ This practicum shows how to run multiple `Future` operations in parallel to save
 Notes :
 - `FutureGroup` is useful when you collect futures dynamically; `Future.wait` is simpler when the list is known up-front.
 - Running futures in parallel reduces total elapsed time to roughly the longest single task.
+
+## Practicum 5 Handling Error Responses in Async Code
+
+**Question 9:**
+![alt text](img/Question9.gif)
+Result :
+- **`.catchError()`** is used to handle errors when a Future fails. It only runs if an exception is thrown. You can check the error and decide what to do (like showing an error message to the user).
+- **`.whenComplete()`** always runs, whether the Future succeeds or fails. It's useful for cleanup tasks like stopping a loading spinner, closing a connection, or logging "operation complete".
+
+**Question10**
+![alt text](img/Question10.gif)
+Result :
+
+- If you call `handleError()` from the `ElevatedButton` and run the app, the method will await `returnError()` which throws after 2 seconds. The `catch` block sets the UI `result` to the error message (for example: `Exception: Something terrible happened!`). The `finally` block always runs and prints `Complete` to the debug console. So you will see the error text in the app and `Complete` in the console.
+
+- Difference between Step 1 and Step 4 (short):
+  - Step 1 used `FutureGroup` (from `package:async`) which lets you add futures dynamically and close the group later — useful when you don't have all futures up-front.
+  - Step 4 used Dart's built-in `Future.wait`, which takes a list of futures and is simpler when the futures are known ahead of time. Both run futures in parallel and return a list of results when all complete.
+
+
