@@ -248,3 +248,6 @@ No, GPS coordinates cannot be obtained when running on a web browser.Because the
 ![alt text](img/Question13.jpeg)
 Yes — visually the final result (spinner then coordinates) may look the same, but implementing it with `FutureBuilder` makes the code cleaner, more reactive, and it automatically handles loading/success/error states without many manual `setState()` calls.
 
+**Question 14** 
+![alt text](img/Question14.jpeg)
+Yes now the app displays an explicit error message when the Future fails.Because we use snapshot.hasError in FutureBuilder to display a special UI in error conditions. Previously, the code only displayed snapshot.data.toString() when it was complete (or empty in other cases), so errors were not handled explicitly. Handling errors in the builder makes the UI more informative and prevents the app from displaying null values or confusion in case of failure.
