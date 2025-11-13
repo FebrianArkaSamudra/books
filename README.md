@@ -231,4 +231,14 @@ Result :
   - Step 1 used `FutureGroup` (from `package:async`) which lets you add futures dynamically and close the group later — useful when you don't have all futures up-front.
   - Step 4 used Dart's built-in `Future.wait`, which takes a list of futures and is simpler when the futures are known ahead of time. Both run futures in parallel and return a list of results when all complete.
 
+## Practicum 6: Using Future with StatefulWidget
+
+**Question11**
+![alt text](img/Question11.jpeg)
+
+**Question12**
+![alt text](img/Question12.gif)
+Do you get GPS coordinates when running in a browser? Why is that? :
+
+No, GPS coordinates cannot be obtained when running on a web browser.Because the Geolocator plugin only works on native platforms (Android, iOS, macOS, Windows, Linux). Web browsers don't have direct access to the device's GPS hardware for security and privacy reasons. Browser geolocation requires explicit user permission through the browser's API, which is different from the native mobile geolocation API.
 

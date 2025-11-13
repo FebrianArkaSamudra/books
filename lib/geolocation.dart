@@ -25,6 +25,7 @@ class _LocationScreenState extends State<LocationScreen> {
         permission == LocationPermission.deniedForever) {
       setState(() {
         myPosition = 'Permission denied';
+        _loading = false;
       });
       return;
     }
@@ -34,23 +35,33 @@ class _LocationScreenState extends State<LocationScreen> {
     if (!serviceEnabled) {
       setState(() {
         myPosition = 'Location service disabled';
+        _loading = false;
       });
       return;
     }
 
     try {
-      final pos = await Geolocator.getCurrentPosition();
+      final pos = await getPosition();
       // format similar to the example screenshot
       final lat = pos.latitude.toStringAsFixed(5);
       final lon = pos.longitude.toStringAsFixed(6);
       setState(() {
         myPosition = 'Latitude: $lat, Longitude: $lon';
+        _loading = false;
       });
     } catch (e) {
       setState(() {
         myPosition = 'Error getting location';
+        _loading = false;
       });
     }
+  }
+
+  Future<Position> getPosition() async {
+    // Add a 3-second delay to make the loading animation visible (Soal 12)
+    await Future.delayed(const Duration(seconds: 3));
+    Position position = await Geolocator.getCurrentPosition();
+    return position;
   }
 
   @override
@@ -65,7 +76,9 @@ class _LocationScreenState extends State<LocationScreen> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(myPosition, textAlign: TextAlign.center),
+          child: _loading
+              ? const CircularProgressIndicator()
+              : Text(myPosition, textAlign: TextAlign.center),
         ),
       ),
     );
