@@ -9,57 +9,32 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  String myPosition = '';
-  bool _loading = true;
+  late Future<Position> position;
 
   @override
   void initState() {
     super.initState();
-    _initLocation();
-  }
-
-  Future<void> _initLocation() async {
-    // request permission
-    LocationPermission permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      setState(() {
-        myPosition = 'Permission denied';
-        _loading = false;
-      });
-      return;
-    }
-
-    // ensure service enabled
-    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      setState(() {
-        myPosition = 'Location service disabled';
-        _loading = false;
-      });
-      return;
-    }
-
-    try {
-      final pos = await getPosition();
-      // format similar to the example screenshot
-      final lat = pos.latitude.toStringAsFixed(5);
-      final lon = pos.longitude.toStringAsFixed(6);
-      setState(() {
-        myPosition = 'Latitude: $lat, Longitude: $lon';
-        _loading = false;
-      });
-    } catch (e) {
-      setState(() {
-        myPosition = 'Error getting location';
-        _loading = false;
-      });
-    }
+    position = getPosition();
   }
 
   Future<Position> getPosition() async {
-    // Add a 3-second delay to make the loading animation visible (Soal 12)
+    // Request permission
+    LocationPermission permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      throw Exception('Location permission denied');
+    }
+
+    // Check if location service is enabled
+    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      throw Exception('Location service is disabled');
+    }
+
+    // Add a 3-second delay to make the loading animation visible
     await Future.delayed(const Duration(seconds: 3));
+
+    // Get current position
     Position position = await Geolocator.getCurrentPosition();
     return position;
   }
@@ -67,18 +42,19 @@ class _LocationScreenState extends State<LocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text(
-          'Current Location - Febrian Arka Samudra - 2341720066',
-        ),
-      ),
+      appBar: AppBar(title: const Text('Current Location')),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: _loading
-              ? const CircularProgressIndicator()
-              : Text(myPosition, textAlign: TextAlign.center),
+        child: FutureBuilder<Position>(
+          future: position,
+          builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return Text(snapshot.data.toString());
+            } else {
+              return const Text('');
+            }
+          },
         ),
       ),
     );
